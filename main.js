@@ -1,5 +1,5 @@
 var {DeckGL, GeoJsonLayer, HexagonLayer, _GlobeView, SimpleMeshLayer, H3ClusterLayer} = deck;
-var COUNTRIES = './data/AO.geojson'
+var COUNTRIES = 'AO.geojson'
 const EARTH_RADIUS_METERS = 6.3e6;
 
 const getColor = (value) => {
