@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Population map 2</title>
+      <!-- <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script> -->
+    <script src="https://deck.gl/docs/api-reference/core/globe-view"></script>
+    <script src="https://unpkg.com/deck.gl@^8.0.0/dist.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- optional if mapbox base map is needed -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Allow the map to render in full screen  -->
+    <script src="https://unpkg.com/h3-js@^3.0.0"></script>
+    <script src="https://unpkg.com/deck.gl@^8.0.0/dist.min.js"></script>
+
+    <script src="https://unpkg.com/h3-js"></script>    
+    
+    <style type="text/css">
+      #map {  position: absolute; 
+              top: 0;
+              bottom: 0; 
+              width:100%; 
+          }
+      body {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+          }
+
+      #control-panel {
+          position: absolute;
+          background: #59575b;
+          opacity: 0.8;
+          top: 0;
+          left: 0;
+          margin: 10px;
+          padding: 10px;
+          font-size: 20px;
+          line-height: 1.5;
+          z-index: 2;
+          }
+
+      #label {
+          position: absolute;
+          size: 22pt;
+          width: 20px;
+          }
+      </style>
+  </head>
+  <body>
+    <div id = "control-panel">
+      <div class='my-legend'>
+        <div class='legend-title'>Уровень следования</div>
+        <div class='legend-title'>экологическим стандартам</div>  
+        <div class='legend-scale'>
+          <ul class='legend-labels' style="color: mintcream; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <li><span style='background:#B2B2B2;'></span><p1 id = 'c2'>Нет данных</p1></span></li>
+            <li><span style='background:#E64C00;'></span><p1 id = 'c3'>Очень низкий</p1></span></li>
+            <li><span style='background:#FFAA00;'></span><p1 id = 'c4'>Умеренно низкий</p1> </span></li>
+            <li><span style='background:#FFFF0A;'></span><p1 id = 'c5'>Умеренно высокий</p1></span></li>
+            <li><span style='background:#38A800;'></span><p1 id = 'c6'>Очень высокий</p1></span> </li>
+         </ul>
+        </div>
+        <style type='text/css'>
+          .my-legend .legend-title {
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 90%;
+            color: mintcream; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+          .my-legend .legend-scale ul {
+            margin: 0;
+            margin-bottom: 5px;
+            padding: 0;
+            float: left;
+            list-style: none;
+            }
+          .my-legend .legend-scale ul li {
+            font-size: 80%;
+            list-style: none;
+            margin-left: 0;
+            line-height: 18px;
+            margin-bottom: 2px;
+            }
+          .my-legend ul.legend-labels li span {
+            display: block;
+            float: left;
+            height: 16px;
+            width: 30px;
+            margin-right: 5px;
+            margin-left: 0;
+            border: 1px solid #999;
+            }
+        </style>
+      </div> 
+    </div>
+    <div id = "map"></div>
+    <script type = "module" src = "scripts/main.js "></script>
+  </body>
+</html>
