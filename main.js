@@ -34,7 +34,7 @@ let countries = new deck.GeoJsonLayer({
     opacity: 1,
     pickable: true, 
     autoHighlight: true,
-    highlightColor: [215, 215, 215],
+    highlightColor: [61, 61, 61],
     onHover: info => {
       if (info.object) {
         const countryInfo = info.object.properties.CYR_Report;
