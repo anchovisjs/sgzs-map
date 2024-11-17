@@ -1,57 +1,53 @@
-var {DeckGL, GeoJsonLayer, SimpleMeshLayer, _GlobeView} = deck;
-var COUNTRIES = 'AO.geojson';
+var {DeckGL, GeoJsonLayer, HexagonLayer, _GlobeView, SimpleMeshLayer, H3ClusterLayer} = deck;
+var COUNTRIES = 'AO.geojson'
 const EARTH_RADIUS_METERS = 6.3e6;
 
-let hoveredCountryId = null; 
-
 const getColor = (value) => {
-  if (value < 1) {
-    return [178, 178, 178];
-  } else if (value < 60) {
-    return [230, 76, 0];
-  } else if (value < 70) {
-    return [255, 170, 0];
-  } else if (value < 75) {
-    return [255, 255, 10];
-  } else {
-    return [56, 168, 0];
-  }
-};
+    if (value < 1) {
+        return [178, 178, 178];
+      } else if (value < 60) {
+        return [230, 76, 0];
+      } else if (value < 70){
+        return [255, 170, 0];
+      } else if (value < 75) {
+        return [255, 255, 10];
+      } else {
+        return [56, 168, 0]; 
+      }
+  };
+    
+let globe = new deck.SimpleMeshLayer({
+    id: 'earth-sphere',
+    data: [0],
+    mesh: new luma.SphereGeometry({radius: EARTH_RADIUS_METERS, nlat: 18, nlong: 36}),
+    coordinateSystem: deck.COORDINATE_SYSTEM.CARTESIAN,
+    getPosition: [0, 0, 0],
+    getColor: [0, 49, 89]
+  });
 
-function createLayers() {
-  return [
-    new deck.SimpleMeshLayer({
-      id: 'earth-sphere',
-      data: [0],
-      mesh: new luma.SphereGeometry({radius: EARTH_RADIUS_METERS, nlat: 18, nlong: 36}),
-      coordinateSystem: deck.COORDINATE_SYSTEM.CARTESIAN,
-      getPosition: [0, 0, 0],
-      getColor: [0, 49, 89],
-    }),
-    new deck.GeoJsonLayer({
-      id: 'earth-land-layer2',
-      data: COUNTRIES,
-      stroked: true,
-      filled: true,
-      getFillColor: d => {
-        if (d.properties.CYR_Report === hoveredCountryId) {
-          return [255, 0, 0, 200];
-        }
-        return getColor(d.properties.CYR_Report);
-      },
-      getLineColor: [71, 72, 74],
-      getLineWidth: 1,
-      opacity: 1,
-      pickable: true,
-      onHover: info => {
-        hoveredCountryId = info.object ? info.object.properties.CYR_Report : null;
-        deckInstance.setProps({ layers: createLayers() }); 
-      },
-    }),
-  ];
-}
+let countries = new deck.GeoJsonLayer({
+    id: 'earth-land-layer2',
+    data: COUNTRIES,
+    stroked: false,
+    filled: true,
+    getFillColor: d => getColor(d.properties.CYR_Report),
+    opacity: 1,
+    pickable: true, 
+    autoHighlight: true,
+    highlightColor: [51, 51, 51],
+    onHover: info => {
+      if (info.object) {
+        const countryInfo = info.object.properties.CYR_Report;
+        console.log(`Hovered Country CYR_Report: ${countryInfo}`);
+        document.getElementById('counter').innerText = 
+          `${ Math.round(Number(countryInfo))}`;
+      } else {
+        document.getElementById('counter').innerText = '';
+      }
+    }
+  });
 
-const deckInstance = new DeckGL({
+let mydeckgl = new DeckGL({
   views: new _GlobeView(),
   initialViewState: {
     longitude: 55,
@@ -65,10 +61,10 @@ const deckInstance = new DeckGL({
       {
         id: 'background',
         type: 'background',
-        paint: { 'background-color': '#111' },
-      },
-    ],
+        paint: { 'background-color': '#111' }
+      }
+    ]
   },
-  controller: true,
-  layers: createLayers(), 
+  controller: true, 
+  layers: [globe, countries],
 });
