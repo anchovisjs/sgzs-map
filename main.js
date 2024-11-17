@@ -25,16 +25,26 @@ let globe = new deck.SimpleMeshLayer({
     getColor: [0, 49, 89]
   });
 
-let countries = new deck.GeoJsonLayer({
-    id: 'earth-land-layer2',
-    data: COUNTRIES,
-    stroked: false,
-    filled: true,
-    getFillColor: d => getColor(d.properties.CYR_Report),
-    getLineColor: [71, 72, 74],
-    getLineWidth: 1,
-    opacity: 1,
-  });
+const countriesLayer = new deck.GeoJsonLayer({
+  id: 'earth-land-layer2',
+  data: COUNTRIES,
+  stroked: true,
+  filled: true,
+  getFillColor: d => {
+    if (d.properties.CYR_Report === hoveredCountryId) {
+      return [255, 0, 0, 200]; 
+    }
+    return getColor(d.properties.CYR_Report); 
+  },
+  getLineColor: [71, 72, 74],
+  getLineWidth: 1,
+  opacity: 1,
+  pickable: true,
+  onHover: info => {
+    hoveredCountryId = info.object ? info.object.properties.CYR_Report : null;
+    deckInstance.setProps({ layers: [countriesLayer] }); 
+  }
+});
 
 let mydeckgl = new DeckGL({
   views: new _GlobeView(),
