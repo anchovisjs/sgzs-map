@@ -31,6 +31,8 @@ let countries = new deck.GeoJsonLayer({
     stroked: false,
     filled: true,
     getFillColor: d => getColor(d.properties.CYR_Report),
+    getLineColor: [71, 72, 74],
+    getLineWidth: 1,
     opacity: 1,
   });
 
