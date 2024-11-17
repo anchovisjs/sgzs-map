@@ -1,15 +1,15 @@
 var {DeckGL, GeoJsonLayer, HexagonLayer, _GlobeView, SimpleMeshLayer, H3ClusterLayer} = deck;
-var COUNTRIES = 'AO.geojson'
+var COUNTRIES = 'AO_updated.geojson'
 const EARTH_RADIUS_METERS = 6.3e6;
 
 const getColor = (value) => {
-    if (value < 1) {
+    if (value < 0.01) {
         return [178, 178, 178];
-      } else if (value < 60) {
+      } else if (value < 0.53) {
         return [230, 76, 0];
-      } else if (value < 70){
+      } else if (value < 0.61){
         return [255, 170, 0];
-      } else if (value < 75) {
+      } else if (value < 0.68) {
         return [255, 255, 10];
       } else {
         return [56, 168, 0]; 
