@@ -1,5 +1,5 @@
 var {DeckGL, GeoJsonLayer, HexagonLayer, _GlobeView, SimpleMeshLayer, H3ClusterLayer} = deck;
-var COUNTRIES = 'AO_updated.geojson'
+var COUNTRIES = 'AO_updated_translated.geojson'
 const EARTH_RADIUS_METERS = 6.3e6;
 
 const getColor = (value) => {
@@ -43,9 +43,11 @@ let countries = new deck.GeoJsonLayer({
       if (info.object) {
         const countryInfo = info.object.properties.CYR_Report;
         console.log(`Hovered Country CYR_Report: ${countryInfo}`);
+        document.getElementById('name').innerText = info.object.properties.NAME_RU;
         document.getElementById('counter').innerText = 
           `${ Math.round(countryInfo * 100) / 100}`; 
       } else {
+        document.getElementById('counter').innerText = '';
         document.getElementById('counter').innerText = '';
       }
     }
